@@ -1,0 +1,518 @@
+﻿@model ProductManagementSystem.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<style>
+    .order-details-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .order-details-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER WITH LOGO BOX
+           ========================= */
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .details-header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .details-header-icon {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #2563eb; /* Blue for Details */
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+        border: 1px solid #1d4ed8;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .details-title {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .details-description {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Colorful Back Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+        .back-btn:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+    /* =========================
+           DETAILS CARD WITH TOP ACCENT
+           ========================= */
+
+    .details-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #2563eb;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+        margin-bottom: 25px;
+    }
+
+    /* =========================
+           COLORFUL & CLASSIC CARD HEADER
+           ========================= */
+
+    .card-header-custom {
+        padding: 22px 28px;
+        border-bottom: 1px solid #cbd5e1;
+        background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .card-header-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background: #2563eb;
+        color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+    }
+
+    .card-header-text h4 {
+        margin: 0 0 2px;
+        color: #1e3a8a;
+        font-size: 18px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .card-header-text p {
+        margin: 0;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .details-body {
+        padding: 32px 28px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .info-item {
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+        .info-item label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 8px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+            .info-item label i {
+                color: #2563eb;
+                font-size: 14px;
+            }
+
+        .info-item div {
+            color: #1e293b;
+            font-size: 15px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+    /* STATUS BADGES */
+    .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid transparent;
+    }
+
+    .pending {
+        color: #92400e;
+        background: #fef3c7;
+        border-color: #fde047;
+    }
+
+    .completed {
+        color: #065f46;
+        background: #d1fae5;
+        border-color: #a7f3d0;
+    }
+
+    .cancelled {
+        color: #991b1b;
+        background: #fee2e2;
+        border-color: #fecaca;
+    }
+
+    /* ORDER ITEMS TABLE */
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .order-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .order-table th {
+            background: #334155;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 18px;
+            border-bottom: 2px solid #1e293b;
+            text-align: left;
+        }
+
+        .order-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .order-table tr:hover {
+            background: #f8fafc;
+        }
+
+    .total-box {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 18px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+        color: #059669;
+    }
+
+    /* ACTION BUTTONS */
+    .details-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-custom {
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-back {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #cbd5e1;
+    }
+
+        .btn-back:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    .btn-edit {
+        background: #d97706; /* Amber for Edit match */
+        color: #ffffff;
+        border-color: #b45309;
+        box-shadow: 0 3px 8px rgba(217, 119, 6, 0.25);
+    }
+
+        .btn-edit:hover {
+            background: #b45309;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 768px) {
+        .order-details-page {
+            padding: 15px;
+        }
+
+        .details-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .details-actions {
+            flex-direction: column;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+    }
+</style>
+
+<div class="order-details-page">
+    <div class="order-details-container">
+
+        <!-- Header -->
+        <div class="details-header">
+            <div class="details-header-left">
+                <div class="details-header-icon">
+                    <i class="bi bi-cart-check-fill"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        Dashboard <span>/</span> Order Management <span>/</span> Details
+                    </div>
+                    <h1 class="details-title">Order Details</h1>
+                    <p class="details-description">Complete verified profile and item breakdown for Order #@Model.OrderId.</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Order")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Orders
+            </a>
+        </div>
+
+        <!-- Order Information Card -->
+        <div class="details-card">
+            <div class="card-header-custom">
+                <div class="card-header-icon">
+                    <i class="bi bi-info-circle-fill"></i>
+                </div>
+                <div class="card-header-text">
+                    <h4>Order Overview</h4>
+                    <p>Primary tracking particulars and metadata.</p>
+                </div>
+            </div>
+
+            <div class="details-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label><i class="bi bi-hash"></i> Order ID</label>
+                        <div>#@Model.OrderId</div>
+                    </div>
+
+                    <div class="info-item">
+                        <label><i class="bi bi-person-fill"></i> Customer</label>
+                        <div>@(Model.Customer?.CustomerName ?? "N/A")</div>
+                    </div>
+
+                    <div class="info-item">
+                        <label><i class="bi bi-calendar3"></i> Order Date</label>
+                        <div>@Model.OrderDate.ToString("dd MMM yyyy hh:mm tt")</div>
+                    </div>
+
+                    <div class="info-item">
+                        <label><i class="bi bi-toggle-on"></i> Status</label>
+                        <div>
+                            @if (Model.OrderStatus == "Pending")
+                            {
+                                <span class="status pending"><i class="bi bi-clock-fill"></i> Pending</span>
+                            }
+                            else if (Model.OrderStatus == "Completed")
+                            {
+                                <span class="status completed"><i class="bi bi-check-circle-fill"></i> Completed</span>
+                            }
+                            else if (Model.OrderStatus == "Cancelled")
+                            {
+                                <span class="status cancelled"><i class="bi bi-x-circle-fill"></i> Cancelled</span>
+                            }
+                            else
+                            {
+                                <span class="status">@Model.OrderStatus</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <label><i class="bi bi-currency-rupee"></i> Total Amount</label>
+                        <div style="color: #059669; font-family: 'Georgia', serif;">₹ @Model.TotalAmount.ToString("N2")</div>
+                    </div>
+
+                    <div class="info-item">
+                        <label><i class="bi bi-card-text"></i> Notes</label>
+                        <div>@(string.IsNullOrWhiteSpace(Model.Notes) ? "No notes recorded" : Model.Notes)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Items Card -->
+        <div class="details-card">
+            <div class="card-header-custom">
+                <div class="card-header-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="card-header-text">
+                    <h4>Associated Order Items</h4>
+                    <p>Line items included in this sales transaction.</p>
+                </div>
+            </div>
+
+            <div class="details-body" style="padding-top: 20px;">
+                <div class="table-responsive">
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>Product Item</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th style="text-align:right;">Line Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.orderItems != null && Model.orderItems.Any())
+                            {
+                                foreach (var item in Model.orderItems)
+                                {
+                                    <tr>
+                                        <td>
+                                            <i class="bi bi-box me-2 text-secondary"></i>
+                                            @(item.Product?.ProductName ?? "N/A")
+                                        </td>
+                                        <td>@item.Quantity</td>
+                                        <td>₹ @item.UnitPrice.ToString("N2")</td>
+                                        <td style="text-align:right; font-weight:bold; color:#059669;">
+                                            ₹ @(item.TotalPrice?.ToString("N2") ?? "0.00")
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" style="text-align:center; color:#64748b; padding: 25px;">
+                                        No individual line items registered for this order.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="total-box">
+                    Total Invoice Amount: ₹ @Model.TotalAmount.ToString("N2")
+                </div>
+
+                <!-- Actions -->
+                <div class="details-actions">
+                    <a href="@Url.Action("Index", "Order")" class="btn-custom btn-back">
+                        <i class="bi bi-list"></i> Return to Registry
+                    </a>
+                    <a href="@Url.Action("Edit", "Order", new { id = Model.OrderId })" class="btn-custom btn-edit">
+                        <i class="bi bi-pencil-square"></i> Edit Order
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

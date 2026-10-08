@@ -1,0 +1,396 @@
+﻿@{
+    ViewData["Title"] = "Create Account";
+}
+
+<style>
+    .register-wrapper {
+        min-height: 90vh;
+        background: #eef2f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 1100px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* =========================
+           LEFT BRANDING (Classic Dark Slate)
+           ========================= */
+
+    .register-left {
+        background: #1e293b;
+        color: #ffffff;
+        padding: 55px 48px;
+        min-height: 520px;
+        display: flex;
+        align-items: center;
+        border-right: 1px solid #0f172a;
+    }
+
+    .brand-logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 6px;
+        background: #334155;
+        border: 1px solid #475569;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        color: #38bdf8;
+        margin-bottom: 25px;
+    }
+
+    .register-left h1 {
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        color: #ffffff;
+    }
+
+    .register-left p {
+        color: #cbd5e1;
+        line-height: 1.7;
+        margin-bottom: 28px;
+        font-size: 14px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #e2e8f0;
+    }
+
+    .feature-icon {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        border-radius: 4px;
+        background: #334155;
+        border: 1px solid #475569;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #38bdf8;
+    }
+
+    /* =========================
+           RIGHT REGISTRATION FORM
+           ========================= */
+
+    .register-right {
+        padding: 55px 50px;
+        min-height: 520px;
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+    }
+
+    .register-content {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .register-title {
+        font-family: 'Georgia', serif;
+        font-size: 26px;
+        font-weight: bold;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+
+    .register-subtitle {
+        color: #64748b;
+        margin-bottom: 25px;
+        line-height: 1.6;
+        font-size: 13px;
+    }
+
+    .form-label {
+        font-weight: bold;
+        font-size: 12px;
+        color: #334155;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+    }
+
+    .form-control {
+        height: 44px;
+        border-radius: 6px;
+        border: 1px solid #94a3b8;
+        font-size: 13px;
+        color: #0f172a;
+        background: #ffffff;
+    }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+    .password-container {
+        position: relative;
+    }
+
+        .password-container .form-control {
+            padding-right: 70px;
+        }
+
+    .password-button {
+        position: absolute;
+        right: 6px;
+        top: 5px;
+        height: 34px;
+        padding: 0 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        background: #f8fafc;
+        color: #334155;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .password-button:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+    .register-button {
+        height: 44px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        background: #2563eb;
+        border: 1px solid #1d4ed8;
+        color: #ffffff;
+        margin-top: 5px;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+    }
+
+        .register-button:hover {
+            background: #1d4ed8;
+            color: #ffffff;
+        }
+
+    .login-section {
+        text-align: center;
+        margin-top: 20px;
+        color: #64748b;
+        font-size: 12px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 18px;
+    }
+
+        .login-section a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .login-section a:hover {
+                text-decoration: underline;
+            }
+
+    .footer-text {
+        text-align: center;
+        color: #64748b;
+        font-size: 11px;
+        margin-top: 18px;
+    }
+
+    /* =========================
+           RESPONSIVE (Razor Safe: @@media)
+           ========================= */
+
+    @@media (max-width: 900px) {
+        .register-wrapper {
+            padding: 20px 14px;
+        }
+
+        .register-left {
+            min-height: auto;
+            padding: 40px 30px;
+            border-right: none;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .register-right {
+            min-height: auto;
+            padding: 40px 30px;
+        }
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="register-card">
+        <div class="row g-0">
+
+            <!-- Left Branding Section -->
+            <div class="col-lg-6 register-left">
+                <div>
+                    <div class="brand-logo">
+                        PMS
+                    </div>
+
+                    <h1>Create Your Account</h1>
+
+                    <p>
+                        Get access to a centralized enterprise platform for managing products, inventory, customers, suppliers, operations, and verified business insights.
+                    </p>
+
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="bi bi-check-lg"></i></span>
+                        Centralized Business Management
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="bi bi-check-lg"></i></span>
+                        Inventory & Product Tracking
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="bi bi-check-lg"></i></span>
+                        Customer & Supplier Directory
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="bi bi-check-lg"></i></span>
+                        Secure Administrative Access
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="col-lg-6 register-right">
+                <div class="register-content">
+                    <h2 class="register-title">Create Account</h2>
+                    <p class="register-subtitle">
+                        Enter your professional details below to create a new administrator account.
+                    </p>
+
+                    <!-- Validation Summary -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" style="font-size: 12px; font-weight: bold;"></div>
+
+                    <form asp-action="Register" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text"
+                                   name="FullName"
+                                   class="form-control"
+                                   placeholder="Enter your full name"
+                                   autocomplete="name"
+                                   required />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email"
+                                   name="Email"
+                                   class="form-control"
+                                   placeholder="Enter your corporate email"
+                                   autocomplete="email"
+                                   required />
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <div class="password-container">
+                                <input type="password"
+                                       name="Password"
+                                       id="password"
+                                       class="form-control"
+                                       placeholder="Create a secure password"
+                                       autocomplete="new-password"
+                                       required />
+                                <button type="button"
+                                        class="password-button"
+                                        onclick="togglePassword('password', this)">
+                                    Show
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-4">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="password-container">
+                                <input type="password"
+                                       name="ConfirmPassword"
+                                       id="confirmPassword"
+                                       class="form-control"
+                                       placeholder="Confirm your password"
+                                       autocomplete="new-password"
+                                       required />
+                                <button type="button"
+                                        class="password-button"
+                                        onclick="togglePassword('confirmPassword', this)">
+                                    Show
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button type="submit" class="btn btn-primary w-100 register-button">
+                            <i class="bi bi-person-plus-fill me-1"></i> Create Account
+                        </button>
+                    </form>
+
+                    <!-- Login Link -->
+                    <div class="login-section">
+                        Already have an authorized account?
+                        <a asp-controller="Account" asp-action="Login">Sign In</a>
+                    </div>
+
+                    <div class="footer-text">
+                        Product Management System &bull; Enterprise Admin Portal
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId, button) {
+        const password = document.getElementById(inputId);
+        if (password.type === "password") {
+            password.type = "text";
+            button.innerText = "Hide";
+        } else {
+            password.type = "password";
+            button.innerText = "Show";
+        }
+    }
+</script>

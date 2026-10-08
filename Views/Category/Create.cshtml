@@ -1,0 +1,654 @@
+﻿@model ProductManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+<style>
+    .category-create-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .category-create-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER WITH LOGO BOX
+           ========================= */
+
+    .create-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .create-header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .create-header-icon {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+        border: 1px solid #1d4ed8;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .create-title {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .create-description {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Colorful Back Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+        .back-btn:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+    /* =========================
+           FORM CARD WITH TOP ACCENT
+           ========================= */
+
+    .create-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #2563eb;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    /* =========================
+           COLORFUL & CLASSIC CARD HEADER
+           ========================= */
+
+    .card-header-custom {
+        padding: 22px 28px;
+        border-bottom: 1px solid #cbd5e1;
+        background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header-left-group {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .card-header-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background: #2563eb;
+        color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+    }
+
+    .card-header-text h4 {
+        margin: 0 0 2px;
+        color: #1e3a8a;
+        font-size: 18px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .card-header-text p {
+        margin: 0;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .required-label {
+        font-size: 12px;
+        color: #dc2626;
+        font-weight: bold;
+    }
+
+    .form-body {
+        padding: 32px 28px;
+    }
+
+    .form-group-custom {
+        margin-bottom: 24px;
+    }
+
+    .form-label-custom {
+        display: block;
+        color: #334155;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .required-star {
+        color: #dc2626;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        height: 46px;
+        padding: 0 16px 0 44px;
+        border: 1px solid #94a3b8;
+        border-radius: 6px;
+        outline: none;
+        font-size: 14px;
+        color: #0f172a;
+        background: #ffffff;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+
+        .form-control-custom:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 16px;
+        }
+
+    textarea.form-control-custom {
+        height: auto;
+        padding: 14px 16px 14px 44px;
+        resize: vertical;
+    }
+
+    .textarea-wrapper {
+        position: relative;
+    }
+
+        .textarea-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+    /* AUTOMATIC ICON PREVIEW BOX */
+    .icon-preview-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 12px;
+        padding: 14px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .icon-preview {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 18px;
+        border: 1px solid #bfdbfe;
+    }
+
+    .icon-preview-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+        .icon-preview-content strong {
+            color: #1e293b;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .icon-preview-content span {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+    /* STATUS BOX */
+    .status-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        margin-bottom: 28px;
+    }
+
+    .status-content {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .active-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+        font-size: 16px;
+    }
+
+    .status-content strong {
+        display: block;
+        color: #1e293b;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
+
+    .status-content p {
+        margin: 0;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .active-badge {
+        padding: 5px 12px;
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    /* VALIDATION & ERROR */
+    .validation-message {
+        color: #dc2626;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .field-error {
+        color: #dc2626;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 6px;
+        display: block;
+    }
+
+    /* BUTTONS */
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 10px;
+    }
+
+    .btn-custom {
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .cancel-btn {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #cbd5e1;
+    }
+
+        .cancel-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    .save-btn {
+        background: #2563eb;
+        color: #ffffff;
+        border-color: #1d4ed8;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+    }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 700px) {
+        .category-create-page {
+            padding: 15px;
+        }
+
+        .create-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+
+        .status-section {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card-header-custom {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+</style>
+
+<div class="category-create-page">
+    <div class="category-create-container">
+
+        <!-- Header -->
+        <div class="create-header">
+            <div class="create-header-left">
+                <div class="create-header-icon">
+                    <i class="bi bi-folder-plus"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        Dashboard <span>/</span> Category Management <span>/</span> Create
+                    </div>
+                    <h1 class="create-title">Create Category</h1>
+                    <p class="create-description">Add a new product category to organize your catalog securely.</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Category")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Categories
+            </a>
+        </div>
+
+        <!-- Form Card -->
+        <div class="create-card">
+            <div class="card-header-custom">
+                <div class="card-header-left-group">
+                    <div class="card-header-icon">
+                        <i class="bi bi-tags-fill"></i>
+                    </div>
+                    <div class="card-header-text">
+                        <h4>Category Information</h4>
+                        <p>Enter category particulars and verified description below.</p>
+                    </div>
+                </div>
+                <span class="required-label">* Required Fields</span>
+            </div>
+
+            <div class="form-body">
+                <form asp-controller="Category" asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <!-- Validation Summary -->
+                    <div asp-validation-summary="ModelOnly" class="validation-message"></div>
+
+                    <!-- Category Name -->
+                    <div class="form-group-custom">
+                        <label asp-for="CategoryName" class="form-label-custom">
+                            Category Name <span class="required-star">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-tag"></i>
+                            <input asp-for="CategoryName"
+                                   id="categoryNameInput"
+                                   class="form-control-custom"
+                                   placeholder="e.g. Electronics, Footwear..."
+                                   autocomplete="off" />
+                        </div>
+                        <span asp-validation-for="CategoryName" class="field-error"></span>
+
+                        <!-- Automatic Icon Preview Box -->
+                        <div class="icon-preview-box">
+                            <div class="icon-preview">
+                                <i id="categoryIcon" class="bi bi-folder-fill"></i>
+                            </div>
+                            <div class="icon-preview-content">
+                                <strong>Automatic Category Icon</strong>
+                                <span id="categoryIconText">Icon will be selected dynamically based on category name.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Description -->
+                    <div class="form-group-custom">
+                        <label asp-for="CategoryDescription" class="form-label-custom">
+                            Category Description
+                        </label>
+                        <div class="textarea-wrapper">
+                            <i class="bi bi-card-text"></i>
+                            <textarea asp-for="CategoryDescription"
+                                      class="form-control-custom"
+                                      rows="4"
+                                      maxlength="300"
+                                      placeholder="Describe what type of products belong to this category..."></textarea>
+                        </div>
+                        <span asp-validation-for="CategoryDescription" class="field-error"></span>
+                    </div>
+
+                    <!-- Status Section -->
+                    <div class="status-section">
+                        <div class="status-content">
+                            <div class="active-icon">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <div>
+                                <strong>Active Category Status</strong>
+                                <p>This category will be marked as active and ready for product assignments.</p>
+                            </div>
+                        </div>
+                        <span class="active-badge">Active</span>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <a href="@Url.Action("Index", "Category")" class="btn-custom cancel-btn">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-custom save-btn">
+                            <i class="bi bi-plus-circle-fill"></i> Create Category
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const categoryNameInput = document.getElementById("categoryNameInput");
+            const categoryIcon = document.getElementById("categoryIcon");
+            const categoryIconText = document.getElementById("categoryIconText");
+
+            function getCategoryIcon(categoryName) {
+                const name = categoryName.toLowerCase().trim();
+                let icon = "bi-folder-fill";
+                let text = "General category classification";
+
+                if (name.includes("mobile") || name.includes("phone") || name.includes("smartphone") || name.includes("iphone")) {
+                    icon = "bi-phone-fill";
+                    text = "Mobile / Smartphone category";
+                } else if (name.includes("laptop") || name.includes("computer") || name.includes("pc")) {
+                    icon = "bi-laptop-fill";
+                    text = "Laptop / Computer category";
+                } else if (name.includes("electronic") || name.includes("electronics") || name.includes("tv") || name.includes("television")) {
+                    icon = "bi-tv-fill";
+                    text = "Electronics category";
+                } else if (name.includes("cloth") || name.includes("fashion") || name.includes("dress") || name.includes("garment")) {
+                    icon = "bi-person-standing-dress";
+                    text = "Clothing & Fashion category";
+                } else if (name.includes("shoe") || name.includes("footwear") || name.includes("sandal")) {
+                    icon = "bi-person-walking";
+                    text = "Footwear & Shoes category";
+                } else if (name.includes("grocery") || name.includes("supermarket") || name.includes("shopping")) {
+                    icon = "bi-cart-fill";
+                    text = "Grocery & Shopping category";
+                } else if (name.includes("food") || name.includes("restaurant") || name.includes("hotel") || name.includes("bakery")) {
+                    icon = "bi-cup-hot-fill";
+                    text = "Food & Restaurant category";
+                } else if (name.includes("book") || name.includes("education") || name.includes("school") || name.includes("college")) {
+                    icon = "bi-book-fill";
+                    text = "Books & Education category";
+                } else if (name.includes("software") || name.includes("programming") || name.includes("developer") || name.includes("it ")) {
+                    icon = "bi-code-slash";
+                    text = "Software & IT category";
+                } else if (name.includes("car") || name.includes("auto") || name.includes("automobile") || name.includes("vehicle") || name.includes("bike")) {
+                    icon = "bi-car-front-fill";
+                    text = "Automobile & Vehicle category";
+                } else if (name.includes("company") || name.includes("business") || name.includes("corporate") || name.includes("office")) {
+                    icon = "bi-building-fill";
+                    text = "Corporate & Business category";
+                } else if (name.includes("furniture") || name.includes("home") || name.includes("house")) {
+                    icon = "bi-house-fill";
+                    text = "Furniture & Home category";
+                } else if (name.includes("beauty") || name.includes("cosmetic") || name.includes("salon")) {
+                    icon = "bi-stars";
+                    text = "Beauty & Cosmetics category";
+                } else if (name.includes("medicine") || name.includes("medical") || name.includes("pharmacy") || name.includes("health")) {
+                    icon = "bi-heart-pulse-fill";
+                    text = "Medical & Healthcare category";
+                } else if (name.includes("sport") || name.includes("fitness") || name.includes("gym")) {
+                    icon = "bi-trophy-fill";
+                    text = "Sports & Fitness category";
+                } else if (name.includes("tool") || name.includes("hardware")) {
+                    icon = "bi-tools";
+                    text = "Tools & Hardware category";
+                } else if (name.includes("camera") || name.includes("photography")) {
+                    icon = "bi-camera-fill";
+                    text = "Camera & Photography category";
+                } else if (name.includes("music") || name.includes("audio") || name.includes("song")) {
+                    icon = "bi-music-note-beamed";
+                    text = "Music & Audio category";
+                }
+
+                return { icon: icon, text: text };
+            }
+
+            function updateCategoryIcon() {
+                const categoryName = categoryNameInput.value || "";
+                const result = getCategoryIcon(categoryName);
+                categoryIcon.className = "bi " + result.icon;
+                categoryIconText.textContent = result.text;
+            }
+
+            if (categoryNameInput) {
+                categoryNameInput.addEventListener("input", updateCategoryIcon);
+                updateCategoryIcon();
+            }
+        });
+    </script>
+}

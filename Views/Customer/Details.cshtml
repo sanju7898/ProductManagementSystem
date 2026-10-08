@@ -1,0 +1,496 @@
+﻿@model ProductManagementSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<style>
+    .customer-details-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .customer-details-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER WITH LOGO BOX
+           ========================= */
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .details-header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .details-header-icon {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #2563eb; /* Blue for Details */
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+        border: 1px solid #1d4ed8;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .details-title {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .details-description {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Colorful Back Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+        .back-btn:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+    /* =========================
+           FORM CARD WITH TOP ACCENT
+           ========================= */
+
+    .details-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #2563eb;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    /* =========================
+           COLORFUL & CLASSIC CARD HEADER
+           ========================= */
+
+    .card-header-custom {
+        padding: 22px 28px;
+        border-bottom: 1px solid #cbd5e1;
+        background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .card-header-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background: #2563eb;
+        color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+    }
+
+    .card-header-text h4 {
+        margin: 0 0 2px;
+        color: #1e3a8a;
+        font-size: 18px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .card-header-text p {
+        margin: 0;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .details-body {
+        padding: 32px 28px;
+    }
+
+    .customer-profile {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px;
+        margin-bottom: 25px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .customer-avatar {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 24px;
+        border: 1px solid #bfdbfe;
+    }
+
+    .customer-profile-info h3 {
+        margin: 0 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .customer-profile-info p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .detail-item {
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .detail-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 8px;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+        .detail-label i {
+            color: #2563eb;
+            font-size: 14px;
+        }
+
+    .detail-value {
+        color: #1e293b;
+        font-size: 15px;
+        font-weight: bold;
+        word-break: break-word;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid transparent;
+    }
+
+    .status-active {
+        color: #065f46;
+        background: #d1fae5;
+        border-color: #a7f3d0;
+    }
+
+    .status-inactive {
+        color: #991b1b;
+        background: #fee2e2;
+        border-color: #fecaca;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-custom {
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .back-list-btn {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #cbd5e1;
+    }
+
+        .back-list-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    .edit-btn {
+        background: #d97706; /* Amber for edit match */
+        color: #ffffff;
+        border-color: #b45309;
+        box-shadow: 0 3px 8px rgba(217, 119, 6, 0.25);
+    }
+
+        .edit-btn:hover {
+            background: #b45309;
+            border-color: #92400e;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 700px) {
+        .customer-details-page {
+            padding: 15px;
+        }
+
+        .details-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            flex-direction: column-reverse;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+
+        .customer-profile {
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<div class="customer-details-page">
+    <div class="customer-details-container">
+
+        <!-- Header -->
+        <div class="details-header">
+            <div class="details-header-left">
+                <div class="details-header-icon">
+                    <i class="bi bi-person-vcard-fill"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        Dashboard <span>/</span> Customer Management <span>/</span> Details
+                    </div>
+                    <h1 class="details-title">Customer Details</h1>
+                    <p class="details-description">View complete profile information for this customer.</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Customer")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Customers
+            </a>
+        </div>
+
+        <!-- Details Card -->
+        <div class="details-card">
+            <div class="card-header-custom">
+                <div class="card-header-icon">
+                    <i class="bi bi-person-lines-fill"></i>
+                </div>
+                <div class="card-header-text">
+                    <h4>Customer Information</h4>
+                    <p>Complete customer profile and account information.</p>
+                </div>
+            </div>
+
+            <div class="details-body">
+
+                <!-- Customer Profile -->
+                <div class="customer-profile">
+                    <div class="customer-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="customer-profile-info">
+                        <h3>@Model.CustomerName</h3>
+                        <p>Customer ID: #@Model.CustomerId</p>
+                    </div>
+                </div>
+
+                <!-- Details Grid -->
+                <div class="details-grid">
+
+                    <!-- Customer Name -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-person"></i> Customer Name
+                        </div>
+                        <div class="detail-value">
+                            @Model.CustomerName
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-telephone"></i> Phone Number
+                        </div>
+                        <div class="detail-value">
+                            @Model.Phone
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-envelope"></i> Email Address
+                        </div>
+                        <div class="detail-value">
+                            @if (!string.IsNullOrWhiteSpace(Model.Email))
+                            {
+                                @Model.Email
+                            }
+                            else
+                            {
+                                <span class="text-muted">Not provided</span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-toggle-on"></i> Account Status
+                        </div>
+                        <div class="detail-value">
+                            @if (Model.IsActive)
+                            {
+                                <span class="status-badge status-active">
+                                    <i class="bi bi-check-circle-fill"></i> Active
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive">
+                                    <i class="bi bi-x-circle-fill"></i> Inactive
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Created Date -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-calendar3"></i> Registration Date
+                        </div>
+                        <div class="detail-value">
+                            @Model.CreatedDate.ToString("dd MMM yyyy")
+                        </div>
+                    </div>
+
+                    <!-- Customer ID -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-hash"></i> Customer ID
+                        </div>
+                        <div class="detail-value">
+                            #@Model.CustomerId
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="@Url.Action("Index", "Customer")" class="btn-custom back-list-btn">
+                        <i class="bi bi-list"></i> Back to List
+                    </a>
+
+                    <a href="@Url.Action("Edit", "Customer", new { id = Model.CustomerId })" class="btn-custom edit-btn">
+                        <i class="bi bi-pencil-square"></i> Edit Customer
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

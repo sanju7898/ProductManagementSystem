@@ -1,0 +1,480 @@
+﻿@model ProductManagementSystem.Models.Product
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<style>
+    .product-delete-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .product-delete-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER WITH LOGO BOX
+           ========================= */
+
+    .delete-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .delete-header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .delete-header-icon {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #dc2626; /* Red for Delete match */
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(220, 38, 38, 0.4);
+        border: 1px solid #b91c1c;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .delete-title {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .delete-subtitle {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Colorful Back Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+        .back-btn:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+    /* =========================
+           CARD WITH RED TOP ACCENT
+           ========================= */
+
+    .delete-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #dc2626;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    /* WARNING BOX */
+    .warning-box {
+        margin: 28px;
+        padding: 20px 24px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .warning-icon {
+        color: #dc2626;
+        font-size: 22px;
+        margin-top: 2px;
+    }
+
+    .warning-content strong {
+        display: block;
+        color: #991b1b;
+        font-size: 15px;
+        font-family: 'Georgia', serif;
+        margin-bottom: 4px;
+    }
+
+    .warning-content p {
+        margin: 0;
+        color: #b91c1c;
+        font-size: 13px;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+
+    .details-body {
+        padding: 0 28px 32px;
+    }
+
+    .product-profile {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px;
+        margin-bottom: 24px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .product-avatar {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 24px;
+        border: 1px solid #fecaca;
+    }
+
+    .product-profile-info h3 {
+        margin: 0 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .product-profile-info p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .info-item {
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .info-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 8px;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+        .info-label i {
+            color: #dc2626;
+            font-size: 14px;
+        }
+
+    .info-value {
+        color: #1e293b;
+        font-size: 15px;
+        font-weight: bold;
+        word-break: break-word;
+    }
+
+    .price {
+        color: #059669;
+        font-family: 'Georgia', serif;
+    }
+
+    /* ACTION BUTTONS */
+    .button-area {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-custom {
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-cancel {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #cbd5e1;
+    }
+
+        .btn-cancel:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    .btn-delete {
+        background: #dc2626;
+        color: #ffffff;
+        border-color: #b91c1c;
+        box-shadow: 0 3px 8px rgba(220, 38, 38, 0.25);
+    }
+
+        .btn-delete:hover {
+            background: #b91c1c;
+            border-color: #991b1b;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 750px) {
+        .product-delete-page {
+            padding: 15px;
+        }
+
+        .delete-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .button-area {
+            flex-direction: column-reverse;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+
+        .product-profile {
+            align-items: flex-start;
+        }
+
+        .warning-box {
+            margin: 20px;
+        }
+
+        .details-body {
+            padding: 0 20px 25px;
+        }
+    }
+</style>
+
+<div class="product-delete-page">
+    <div class="product-delete-container">
+
+        <!-- Header -->
+        <div class="delete-header">
+            <div class="delete-header-left">
+                <div class="delete-header-icon">
+                    <i class="bi bi-trash3-fill"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        Dashboard <span>/</span> Product Management <span>/</span> Delete
+                    </div>
+                    <h1 class="delete-title">Delete Product</h1>
+                    <p class="delete-subtitle">Review product details securely before permanent deletion.</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Product")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Products
+            </a>
+        </div>
+
+        <!-- Delete Card -->
+        <div class="delete-card">
+
+            <!-- Warning Box -->
+            <div class="warning-box">
+                <div class="warning-icon">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div class="warning-content">
+                    <strong>Are you sure you want to permanently delete this product?</strong>
+                    <p>This action is irreversible. The product record and associated inventory data will be permanently removed.</p>
+                </div>
+            </div>
+
+            <div class="details-body">
+
+                <!-- Product Profile -->
+                <div class="product-profile">
+                    <div class="product-avatar">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="product-profile-info">
+                        <h3>@Model.ProductName</h3>
+                        <p>Product ID: #@Model.ProductId</p>
+                    </div>
+                </div>
+
+                <!-- Info Grid -->
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-hash"></i> Product ID
+                        </span>
+                        <span class="info-value">
+                            #@Model.ProductId
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-tag-fill"></i> Product Name
+                        </span>
+                        <span class="info-value">
+                            @Model.ProductName
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-grid-fill"></i> Category
+                        </span>
+                        <span class="info-value">
+                            @(Model.Category?.CategoryName ?? "N/A")
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-truck"></i> Supplier
+                        </span>
+                        <span class="info-value">
+                            @(Model.Supplier?.SupplierName ?? "N/A")
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-currency-rupee"></i> Price
+                        </span>
+                        <span class="info-value price">
+                            ₹ @Model.Price.ToString("N2")
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-boxes"></i> Quantity
+                        </span>
+                        <span class="info-value">
+                            @Model.Quantity Units
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">
+                            <i class="bi bi-toggle-on"></i> Status
+                        </span>
+                        <span class="info-value">
+                            @(Model.IsActive ? "Active" : "Inactive")
+                        </span>
+                    </div>
+
+                    <div class="info-item" style="grid-column: span 2;">
+                        <span class="info-label">
+                            <i class="bi bi-calendar3"></i> Created Date
+                        </span>
+                        <span class="info-value">
+                            @Model.CreatedDate.ToString("dd MMM yyyy")
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Form Actions -->
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.ProductId" />
+
+                    <div class="button-area">
+                        <a href="@Url.Action("Index", "Product")" class="btn-custom btn-cancel">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-custom btn-delete" onclick="return confirm('Are you sure you want to permanently delete this product?');">
+                            <i class="bi bi-trash3-fill"></i> Delete Product
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

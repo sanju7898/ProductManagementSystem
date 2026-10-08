@@ -1,0 +1,610 @@
+﻿@model IEnumerable<ProductManagementSystem.Models.Product>
+
+@{
+    ViewData["Title"] = "Stock Report";
+
+    var totalProducts = Model?.Count() ?? 0;
+    var totalStockUnits = Model?.Sum(x => x.Quantity) ?? 0;
+    var lowStockCount = Model?.Count(x => x.Quantity <= 10) ?? 0;
+}
+
+<style>
+    .report-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .report-container {
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER
+           ========================= */
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .header-logo-box {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #0891b2; /* Cyan accent for Stock */
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(8, 145, 178, 0.4);
+        border: 1px solid #0e7490;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+            .breadcrumb-text a:hover {
+                color: #ffffff;
+                text-decoration: underline;
+            }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .title-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .page-heading {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .page-description {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Back to Reports Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 48px;
+        padding: 0 24px;
+        border-radius: 6px;
+        background: #334155;
+        border: 1px solid #475569;
+        color: #e2e8f0;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        transition: all 0.2s;
+    }
+
+        .back-btn:hover {
+            background: #475569;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    /* =========================
+           SUMMARY CARDS
+           ========================= */
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+
+    .summary-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #334155;
+        border-radius: 8px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    }
+
+        .summary-card.summary-total {
+            border-top-color: #2563eb;
+        }
+
+        .summary-card.summary-stock {
+            border-top-color: #0891b2;
+        }
+
+        .summary-card.summary-low {
+            border-top-color: #dc2626;
+        }
+
+    .summary-icon {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 24px;
+    }
+
+    .summary-total .summary-icon {
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+    }
+
+    .summary-stock .summary-icon {
+        background: #ecfeff;
+        color: #0891b2;
+        border: 1px solid #a5f3fc;
+    }
+
+    .summary-low .summary-icon {
+        background: #fef2f2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+    }
+
+    .summary-content span {
+        display: block;
+        color: #1e293b;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0.3px;
+    }
+
+    .summary-content small {
+        display: block;
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .summary-content strong {
+        display: block;
+        font-size: 28px;
+        font-family: 'Georgia', serif;
+        margin-top: 2px;
+    }
+
+    .summary-total strong {
+        color: #2563eb;
+    }
+
+    .summary-stock strong {
+        color: #0891b2;
+    }
+
+    .summary-low strong {
+        color: #dc2626;
+    }
+
+    /* =========================
+           TABLE CARD
+           ========================= */
+
+    .content-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+        margin-bottom: 28px;
+    }
+
+    .table-header {
+        padding: 24px 28px;
+        border-bottom: 1px solid #cbd5e1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #ecfeff 100%);
+    }
+
+    .registry-title-area h4 {
+        margin: 0 0 4px;
+        color: #0e7490;
+        font-size: 20px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .registry-title-icon {
+        width: 36px;
+        height: 36px;
+        background: #0891b2;
+        color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(8, 145, 178, 0.3);
+    }
+
+    .registry-title-area p {
+        margin: 0;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .record-count {
+        padding: 8px 16px;
+        border-radius: 6px;
+        background: #ecfeff;
+        color: #0e7490;
+        font-size: 13px;
+        font-weight: bold;
+        border: 1px solid #a5f3fc;
+        box-shadow: 0 2px 4px rgba(8, 145, 178, 0.08);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .report-table {
+        width: 100%;
+        margin: 0;
+        border-collapse: collapse;
+        min-width: 950px;
+    }
+
+        .report-table thead th {
+            background: #334155;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            border-bottom: 2px solid #1e293b;
+            white-space: nowrap;
+        }
+
+        .report-table tbody td {
+            padding: 18px 20px;
+            font-size: 14px;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .report-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+    .product-id {
+        color: #64748b;
+        font-weight: bold;
+    }
+
+    .product-name {
+        color: #0f172a;
+        font-weight: bold;
+    }
+
+    .price {
+        color: #059669;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    /* STOCK QUANTITY HIGHLIGHTS */
+    .low {
+        color: #991b1b;
+        background: #fee2e2;
+        border: 1px solid #fecaca;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .good {
+        color: #065f46;
+        background: #d1fae5;
+        border: 1px solid #a7f3d0;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* STATUS BADGES */
+    .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid transparent;
+    }
+
+    .active {
+        color: #065f46;
+        background: #d1fae5;
+        border-color: #a7f3d0;
+    }
+
+    .inactive {
+        color: #991b1b;
+        background: #fee2e2;
+        border-color: #fecaca;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+        text-align: center;
+        padding: 65px 20px;
+    }
+
+    .empty-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #ecfeff;
+        color: #0891b2;
+        font-size: 26px;
+        border: 1px solid #a5f3fc;
+    }
+
+    .empty-state h5 {
+        color: #1e293b;
+        font-family: 'Georgia', serif;
+        margin: 0 0 8px;
+        font-size: 18px;
+    }
+
+    .empty-state p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    /* =========================
+           RAZOR SAFE MEDIA QUERY
+           ========================= */
+
+    @@media screen and (max-width: 900px) {
+        .report-page {
+            padding: 15px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="report-page">
+    <div class="report-container">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <div class="header-left">
+                <div class="header-logo-box">
+                    <i class="bi bi-boxes"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        <a href="@Url.Action("Index", "Report")">Reports Dashboard</a> <span>/</span> Stock Inventory Report
+                    </div>
+                    <div class="title-row">
+                        <h1 class="page-heading">Stock Inventory Report</h1>
+                    </div>
+                    <p class="page-description">Complete detailed overview of product stock units, unit pricing, and warehouse levels</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Report")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Reports
+            </a>
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="summary-grid">
+            <div class="summary-card summary-total">
+                <div class="summary-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="summary-content">
+                    <small>Catalog Listings</small>
+                    <span>Total Products</span>
+                    <strong>@totalProducts</strong>
+                </div>
+            </div>
+
+            <div class="summary-card summary-stock">
+                <div class="summary-icon">
+                    <i class="bi bi-stack"></i>
+                </div>
+                <div class="summary-content">
+                    <small>Available Inventory</small>
+                    <span>Total Stock Units</span>
+                    <strong>@totalStockUnits</strong>
+                </div>
+            </div>
+
+            <div class="summary-card summary-low">
+                <div class="summary-icon">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div class="summary-content">
+                    <small>Threshold Warning</small>
+                    <span>Low Stock Items</span>
+                    <strong>@lowStockCount</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECORDS TABLE CARD -->
+        <div class="content-card">
+            <div class="table-header">
+                <div class="registry-title-area">
+                    <h4>
+                        <span class="registry-title-icon"><i class="bi bi-journal-bookmark-fill"></i></span>
+                        Stock Ledger Registry
+                    </h4>
+                    <p>Official catalog stock audit records</p>
+                </div>
+                <span class="record-count">
+                    <i class="bi bi-database-fill me-1"></i> @totalProducts @(totalProducts == 1 ? "Record" : "Records")
+                </span>
+            </div>
+
+            <div class="table-responsive">
+                @if (Model != null && Model.Any())
+                {
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Supplier</th>
+                                <th>Unit Price</th>
+                                <th>Quantity Status</th>
+                                <th>Catalog Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="product-id">#@item.ProductId</span>
+                                    </td>
+                                    <td>
+                                        <span class="product-name">@item.ProductName</span>
+                                    </td>
+                                    <td>
+                                        @(item.Category?.CategoryName ?? "N/A")
+                                    </td>
+                                    <td>
+                                        @(item.Supplier?.SupplierName ?? "N/A")
+                                    </td>
+                                    <td>
+                                        <span class="price">
+                                            ₹ @item.Price.ToString("N2")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (item.Quantity <= 10)
+                                        {
+                                            <span class="low">
+                                                <i class="bi bi-exclamation-circle-fill"></i> @item.Quantity Units (Low)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="good">
+                                                <i class="bi bi-check-circle-fill"></i> @item.Quantity Units
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="status active">
+                                                <i class="bi bi-check-circle-fill"></i> Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status inactive">
+                                                <i class="bi bi-x-circle-fill"></i> Inactive
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="bi bi-boxes"></i>
+                        </div>
+                        <h5>No Stock Records Found</h5>
+                        <p>There are no product inventory records available in the system currently.</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

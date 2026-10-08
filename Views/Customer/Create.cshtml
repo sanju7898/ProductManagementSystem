@@ -1,0 +1,382 @@
+﻿@model ProductManagementSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<style>
+    .customer-create-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .customer-create-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER WITH LOGO BOX
+           ========================= */
+
+    .create-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .create-header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .create-header-icon {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+        border: 1px solid #1d4ed8;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .create-title {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .create-description {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Colorful Back to Customers Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+        .back-btn:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+    /* =========================
+           FORM CARD WITH TOP ACCENT
+           ========================= */
+
+    .create-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #2563eb;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    /* =========================
+           COLORFUL & CLASSIC CARD HEADER
+           ========================= */
+
+    .card-header-custom {
+        padding: 22px 28px;
+        border-bottom: 1px solid #cbd5e1;
+        background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .card-header-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background: #2563eb;
+        color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+    }
+
+    .card-header-text h4 {
+        margin: 0 0 2px;
+        color: #1e3a8a;
+        font-size: 18px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .card-header-text p {
+        margin: 0;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .form-body {
+        padding: 32px 28px;
+    }
+
+    .form-group-custom {
+        margin-bottom: 24px;
+    }
+
+    .form-label-custom {
+        display: block;
+        color: #334155;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .required-star {
+        color: #dc2626;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        height: 46px;
+        padding: 0 16px;
+        border: 1px solid #94a3b8;
+        border-radius: 6px;
+        outline: none;
+        font-size: 14px;
+        color: #0f172a;
+        background: #ffffff;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+
+        .form-control-custom:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+    .validation-message {
+        display: block;
+        color: #dc2626;
+        font-size: 12px;
+        margin-top: 6px;
+        font-weight: bold;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 10px;
+    }
+
+    .btn-custom {
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .cancel-btn {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #cbd5e1;
+    }
+
+        .cancel-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    .save-btn {
+        background: #2563eb;
+        color: #ffffff;
+        border-color: #1d4ed8;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+    }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 700px) {
+        .customer-create-page {
+            padding: 15px;
+        }
+
+        .create-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="customer-create-page">
+    <div class="customer-create-container">
+
+        <!-- Header -->
+        <div class="create-header">
+            <div class="create-header-left">
+                <div class="create-header-icon">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        Dashboard <span>/</span> Customer Management <span>/</span> Create
+                    </div>
+                    <h1 class="create-title">Create Customer</h1>
+                    <p class="create-description">Add a new customer account to the registry system.</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Customer")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Customers
+            </a>
+        </div>
+
+        <!-- Form Card -->
+        <div class="create-card">
+            <div class="card-header-custom">
+                <div class="card-header-icon">
+                    <i class="bi bi-person-badge-fill"></i>
+                </div>
+                <div class="card-header-text">
+                    <h4>Customer Information</h4>
+                    <p>Enter the verified customer details below and click Save Customer.</p>
+                </div>
+            </div>
+
+            <div class="form-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <!-- Validation Summary -->
+                    <div asp-validation-summary="ModelOnly" class="validation-message mb-3"></div>
+
+                    <!-- Customer Name -->
+                    <div class="form-group-custom">
+                        <label asp-for="CustomerName" class="form-label-custom">
+                            Customer Name <span class="required-star">*</span>
+                        </label>
+                        <input asp-for="CustomerName"
+                               class="form-control-custom"
+                               placeholder="Enter customer full name" />
+                        <span asp-validation-for="CustomerName" class="validation-message"></span>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group-custom">
+                        <label asp-for="Phone" class="form-label-custom">
+                            Phone Number <span class="required-star">*</span>
+                        </label>
+                        <input asp-for="Phone"
+                               class="form-control-custom"
+                               placeholder="Enter phone number" />
+                        <span asp-validation-for="Phone" class="validation-message"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group-custom">
+                        <label asp-for="Email" class="form-label-custom">
+                            Email Address
+                        </label>
+                        <input asp-for="Email"
+                               type="email"
+                               class="form-control-custom"
+                               placeholder="Enter email address (optional)" />
+                        <span asp-validation-for="Email" class="validation-message"></span>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="form-actions">
+                        <a href="@Url.Action("Index", "Customer")" class="btn-custom cancel-btn">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-custom save-btn">
+                            <i class="bi bi-check-circle-fill"></i> Save Customer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

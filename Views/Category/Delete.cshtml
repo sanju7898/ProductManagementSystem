@@ -1,0 +1,555 @@
+﻿@model ProductManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<style>
+    .category-delete-page {
+        background: #eef2f5;
+        min-height: 90vh;
+        padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .category-delete-container {
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+           CLASSIC HEADER WITH LOGO BOX
+           ========================= */
+
+    .delete-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #1e293b;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .delete-header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .delete-header-icon {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #dc2626; /* Red for Delete match */
+        color: #ffffff;
+        font-size: 28px;
+        box-shadow: 0 3px 8px rgba(220, 38, 38, 0.4);
+        border: 1px solid #b91c1c;
+    }
+
+    .breadcrumb-text {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+        .breadcrumb-text span {
+            margin: 0 6px;
+            color: #64748b;
+        }
+
+    .delete-title {
+        margin: 0;
+        color: #ffffff;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .delete-subtitle {
+        margin: 5px 0 0;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    /* Colorful Back Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 6px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+        .back-btn:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+    /* =========================
+           FORM CARD WITH RED TOP ACCENT
+           ========================= */
+
+    .delete-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #dc2626;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    /* WARNING BOX */
+    .warning-box {
+        margin: 28px;
+        padding: 20px 24px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .warning-icon {
+        color: #dc2626;
+        font-size: 22px;
+        margin-top: 2px;
+    }
+
+    .warning-content strong {
+        display: block;
+        color: #991b1b;
+        font-size: 15px;
+        font-family: 'Georgia', serif;
+        margin-bottom: 4px;
+    }
+
+    .warning-content p {
+        margin: 0;
+        color: #b91c1c;
+        font-size: 13px;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+
+    .details-body {
+        padding: 0 28px 32px;
+    }
+
+    .category-profile {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px;
+        margin-bottom: 24px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .category-avatar {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 24px;
+        border: 1px solid #fecaca;
+    }
+
+    .category-profile-info h3 {
+        margin: 0 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+    }
+
+    .category-profile-info p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .detail-item {
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+        .detail-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+    .detail-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 8px;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+        .detail-label i {
+            color: #dc2626;
+            font-size: 14px;
+        }
+
+    .detail-value {
+        color: #1e293b;
+        font-size: 15px;
+        font-weight: bold;
+        word-break: break-word;
+    }
+
+    .description-value {
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.6;
+        font-weight: normal;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid transparent;
+    }
+
+    .status-active {
+        color: #065f46;
+        background: #d1fae5;
+        border-color: #a7f3d0;
+    }
+
+    .status-inactive {
+        color: #991b1b;
+        background: #fee2e2;
+        border-color: #fecaca;
+    }
+
+    /* ACTION BUTTONS */
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-custom {
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .cancel-btn {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #cbd5e1;
+    }
+
+        .cancel-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    .delete-btn {
+        background: #dc2626;
+        color: #ffffff;
+        border-color: #b91c1c;
+        box-shadow: 0 3px 8px rgba(220, 38, 38, 0.25);
+    }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+            border-color: #991b1b;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 700px) {
+        .category-delete-page {
+            padding: 15px;
+        }
+
+        .delete-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            flex-direction: column-reverse;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+
+        .category-profile {
+            align-items: flex-start;
+        }
+
+        .warning-box {
+            margin: 20px;
+        }
+
+        .details-body {
+            padding: 0 20px 25px;
+        }
+    }
+</style>
+
+<div class="category-delete-page">
+    <div class="category-delete-container">
+
+        <!-- Header -->
+        <div class="delete-header">
+            <div class="delete-header-left">
+                <div class="delete-header-icon">
+                    <i class="bi bi-trash3-fill"></i>
+                </div>
+                <div>
+                    <div class="breadcrumb-text">
+                        Dashboard <span>/</span> Category Management <span>/</span> Delete
+                    </div>
+                    <h1 class="delete-title">Delete Category</h1>
+                    <p class="delete-subtitle">Review category information securely before permanent deletion.</p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "Category")" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Categories
+            </a>
+        </div>
+
+        <!-- Delete Card -->
+        <div class="delete-card">
+
+            <!-- Warning -->
+            <div class="warning-box">
+                <div class="warning-icon">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div class="warning-content">
+                    <strong>Are you sure you want to delete this category?</strong>
+                    <p>This action is irreversible. The category record and all associated links will be permanently removed from the system.</p>
+                </div>
+            </div>
+
+            <div class="details-body">
+
+                <!-- Category Profile -->
+                <div class="category-profile">
+                    <div class="category-avatar">
+                        <i id="categoryDeleteIcon" class="bi bi-folder-fill"></i>
+                    </div>
+                    <div class="category-profile-info">
+                        <h3>@Model.CategoryName</h3>
+                        <p>Category ID: #@Model.CategoryId</p>
+                    </div>
+                </div>
+
+                <!-- Category Details Grid -->
+                <div class="details-grid">
+
+                    <!-- Category Name -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-tag-fill"></i> Category Name
+                        </div>
+                        <div class="detail-value">
+                            @Model.CategoryName
+                        </div>
+                    </div>
+
+                    <!-- Category ID -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-hash"></i> Category ID
+                        </div>
+                        <div class="detail-value">
+                            #@Model.CategoryId
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="detail-item full-width">
+                        <div class="detail-label">
+                            <i class="bi bi-card-text"></i> Description
+                        </div>
+                        <div class="detail-value description-value">
+                            @if (string.IsNullOrWhiteSpace(Model.CategoryDescription))
+                            {
+                                <span class="text-muted">No description provided.</span>
+                            }
+                            else
+                            {
+                                @Model.CategoryDescription
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-toggle-on"></i> Account Status
+                        </div>
+                        <div class="detail-value">
+                            @if (Model.IsAction)
+                            {
+                                <span class="status-badge status-active">
+                                    <i class="bi bi-check-circle-fill"></i> Active
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive">
+                                    <i class="bi bi-x-circle-fill"></i> Inactive
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Created Date -->
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="bi bi-calendar3"></i> Registration Date
+                        </div>
+                        <div class="detail-value">
+                            @Model.CreatedDate.ToString("dd MMM yyyy")
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="action-buttons">
+                    <a href="@Url.Action("Index", "Category")" class="btn-custom cancel-btn">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="CategoryId" />
+                        <button type="submit" class="btn-custom delete-btn" onclick="return confirm('Are you sure you want to permanently delete this category record?');">
+                            <i class="bi bi-trash3-fill"></i> Delete Category
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const categoryName = "@Html.Raw(Model.CategoryName ?? "")".toLowerCase().trim();
+            const deleteIcon = document.getElementById("categoryDeleteIcon");
+
+            let icon = "bi-folder-fill";
+
+            if (categoryName.includes("mobile") || categoryName.includes("phone") || categoryName.includes("smartphone") || categoryName.includes("iphone")) {
+                icon = "bi-phone-fill";
+            } else if (categoryName.includes("laptop") || categoryName.includes("computer") || categoryName.includes("pc")) {
+                icon = "bi-laptop-fill";
+            } else if (categoryName.includes("electronic") || categoryName.includes("electronics") || categoryName.includes("tv") || categoryName.includes("television")) {
+                icon = "bi-tv-fill";
+            } else if (categoryName.includes("cloth") || categoryName.includes("fashion") || categoryName.includes("dress") || categoryName.includes("garment")) {
+                icon = "bi-person-standing-dress";
+            } else if (categoryName.includes("shoe") || categoryName.includes("footwear") || categoryName.includes("sandal")) {
+                icon = "bi-person-walking";
+            } else if (categoryName.includes("grocery") || categoryName.includes("supermarket") || categoryName.includes("shopping")) {
+                icon = "bi-cart-fill";
+            } else if (categoryName.includes("food") || categoryName.includes("restaurant") || categoryName.includes("hotel") || categoryName.includes("bakery")) {
+                icon = "bi-cup-hot-fill";
+            } else if (categoryName.includes("book") || categoryName.includes("education") || categoryName.includes("school") || categoryName.includes("college")) {
+                icon = "bi-book-fill";
+            } else if (categoryName.includes("software") || categoryName.includes("programming") || categoryName.includes("developer") || categoryName.includes("it ")) {
+                icon = "bi-code-slash";
+            } else if (categoryName.includes("car") || categoryName.includes("auto") || categoryName.includes("automobile") || categoryName.includes("vehicle") || categoryName.includes("bike")) {
+                icon = "bi-car-front-fill";
+            } else if (categoryName.includes("company") || categoryName.includes("business") || categoryName.includes("corporate") || categoryName.includes("office")) {
+                icon = "bi-building-fill";
+            } else if (categoryName.includes("furniture") || categoryName.includes("home") || categoryName.includes("house")) {
+                icon = "bi-house-fill";
+            } else if (categoryName.includes("beauty") || categoryName.includes("cosmetic") || categoryName.includes("salon")) {
+                icon = "bi-stars";
+            } else if (categoryName.includes("medicine") || categoryName.includes("medical") || categoryName.includes("pharmacy") || categoryName.includes("health")) {
+                icon = "bi-heart-pulse-fill";
+            } else if (categoryName.includes("sport") || categoryName.includes("fitness") || categoryName.includes("gym")) {
+                icon = "bi-trophy-fill";
+            } else if (categoryName.includes("tool") || categoryName.includes("hardware")) {
+                icon = "bi-tools";
+            } else if (categoryName.includes("camera") || categoryName.includes("photography")) {
+                icon = "bi-camera-fill";
+            } else if (categoryName.includes("music") || categoryName.includes("audio") || categoryName.includes("song")) {
+                icon = "bi-music-note-beamed";
+            }
+
+            if (deleteIcon) deleteIcon.className = "bi " + icon;
+        });
+    </script>
+}

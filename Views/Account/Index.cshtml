@@ -1,0 +1,383 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+
+<style>
+    .account-page {
+        min-height: calc(100vh - 56px);
+        background: #eef2f5; /* Classic Corporate Light Gray Background */
+        padding: 40px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .account-card {
+        width: 100%;
+        max-width: 1100px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* =========================
+           BRANDING SECTION (Classic Dark Slate)
+           ========================= */
+
+    .account-brand {
+        min-height: 520px;
+        padding: 55px 48px;
+        background: #1e293b; /* Rich Classic Dark Slate */
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        border-right: 1px solid #0f172a;
+    }
+
+    .brand-content {
+        width: 100%;
+    }
+
+    .brand-logo {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        border-radius: 6px;
+        background: #334155;
+        border: 1px solid #475569;
+        color: #38bdf8;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .account-brand h2 {
+        margin: 0 0 15px;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 1.3;
+    }
+
+    .brand-description {
+        max-width: 430px;
+        margin: 0 0 32px;
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    /* =========================
+           FEATURES
+           ========================= */
+
+    .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #e2e8f0;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .feature-icon {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background: #334155;
+        border: 1px solid #475569;
+        color: #38bdf8;
+        font-size: 12px;
+    }
+
+    /* =========================
+           ACTION SECTION
+           ========================= */
+
+    .account-actions {
+        min-height: 520px;
+        padding: 55px 50px;
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+    }
+
+    .account-content {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .welcome-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 12px;
+        padding: 3px 8px;
+        border-radius: 3px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #2563eb;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+        .welcome-label i {
+            font-size: 13px;
+        }
+
+    .account-title {
+        margin: 0 0 10px;
+        color: #1e293b;
+        font-family: 'Georgia', serif;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .account-subtitle {
+        margin: 0 0 28px;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* =========================
+           BUTTONS
+           ========================= */
+
+    .account-button {
+        width: 100%;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .primary-button {
+        color: #ffffff;
+        background: #2563eb;
+        border: 1px solid #1d4ed8;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+    }
+
+        .primary-button:hover {
+            background: #1d4ed8;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+    .secondary-button {
+        color: #334155;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+    }
+
+        .secondary-button:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+    /* =========================
+           SECURITY / INFO BOX
+           ========================= */
+
+    .account-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 22px;
+        padding: 14px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .account-info-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+        font-size: 14px;
+    }
+
+    .account-info-text strong {
+        display: block;
+        margin-bottom: 2px;
+        color: #1e293b;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .account-info-text span {
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    /* =========================
+           FOOTER
+           ========================= */
+
+    .account-footer {
+        margin-top: 25px;
+        padding-top: 18px;
+        border-top: 1px solid #e2e8f0;
+        text-align: center;
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    /* =========================
+           RESPONSIVE (Razor Safe: @@media)
+           ========================= */
+
+    @@media screen and (max-width: 900px) {
+        .account-page {
+            padding: 20px 14px;
+        }
+
+        .account-brand {
+            min-height: auto;
+            padding: 40px 30px;
+            border-right: none;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .account-actions {
+            min-height: auto;
+            padding: 40px 30px;
+        }
+    }
+</style>
+
+<div class="account-page">
+    <div class="account-card">
+        <div class="row g-0">
+
+            <!-- BRANDING SECTION -->
+            <div class="col-lg-6 account-brand">
+                <div class="brand-content">
+                    <div class="brand-logo">
+                        PMS
+                    </div>
+
+                    <h2>Product Management System</h2>
+
+                    <p class="brand-description">
+                        A centralized enterprise business platform for managing inventory, customers, suppliers, operations, and verified system analytics.
+                    </p>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Inventory & Product Management
+                        </div>
+
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Customer & Supplier Directory
+                        </div>
+
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Secure Administrative Access
+                        </div>
+
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Reports & Verified Insights
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACCOUNT ACTIONS -->
+            <div class="col-lg-6 account-actions">
+                <div class="account-content">
+                    <div class="welcome-label">
+                        <i class="bi bi-shield-check"></i> Secure Portal
+                    </div>
+
+                    <h2 class="account-title">Welcome</h2>
+
+                    <p class="account-subtitle">
+                        Sign in to your authorized account or register a new administrator profile to access the management dashboard.
+                    </p>
+
+                    <div class="d-grid gap-3">
+                        <!-- LOGIN -->
+                        <a asp-controller="Account"
+                           asp-action="Login"
+                           class="account-button primary-button">
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In to Portal
+                        </a>
+
+                        <!-- REGISTER -->
+                        <a asp-controller="Account"
+                           asp-action="Register"
+                           class="account-button secondary-button">
+                            <i class="bi bi-person-plus-fill"></i> Register New Account
+                        </a>
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="account-info">
+                        <div class="account-info-icon">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </div>
+                        <div class="account-info-text">
+                            <strong>System Access Note</strong>
+                            <span>New accounts require validation. Use your authorized corporate email to register.</span>
+                        </div>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="account-footer">
+                        Product Management System &bull; Enterprise Admin Portal
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,540 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    .login-page {
+        min-height: calc(100vh - 56px);
+        background: #eef2f5;
+        padding: 40px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 1100px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* =========================
+           LEFT BRANDING (Classic Dark Slate)
+           ========================= */
+
+    .login-left {
+        min-height: 520px;
+        padding: 55px 48px;
+        background: #1e293b;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        border-right: 1px solid #0f172a;
+    }
+
+    .login-brand-content {
+        width: 100%;
+    }
+
+    .brand-logo {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        border-radius: 6px;
+        background: #334155;
+        border: 1px solid #475569;
+        color: #38bdf8;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .login-left h1 {
+        margin: 0 0 15px;
+        font-family: 'Georgia', serif;
+        font-size: 28px;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 1.3;
+    }
+
+    .login-description {
+        max-width: 430px;
+        margin: 0 0 32px;
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    /* =========================
+           FEATURES
+           ========================= */
+
+    .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #e2e8f0;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .feature-icon {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background: #334155;
+        border: 1px solid #475569;
+        color: #38bdf8;
+        font-size: 12px;
+    }
+
+    /* =========================
+           RIGHT LOGIN SECTION
+           ========================= */
+
+    .login-right {
+        min-height: 520px;
+        padding: 55px 50px;
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+    }
+
+    .login-content {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .login-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 12px;
+        padding: 3px 8px;
+        border-radius: 3px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #2563eb;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+        .login-label i {
+            font-size: 13px;
+        }
+
+    .login-title {
+        margin: 0 0 9px;
+        color: #1e293b;
+        font-family: 'Georgia', serif;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .login-subtitle {
+        margin: 0 0 28px;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* =========================
+           VALIDATION
+           ========================= */
+
+    .validation-summary {
+        padding: 12px 14px;
+        margin-bottom: 20px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        color: #991b1b;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    /* =========================
+           FORM
+           ========================= */
+
+    .form-label {
+        display: block;
+        margin-bottom: 6px;
+        color: #334155;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 44px;
+        padding-left: 40px;
+        border: 1px solid #94a3b8;
+        border-radius: 6px;
+        color: #0f172a;
+        background: #ffffff;
+        font-size: 13px;
+        box-shadow: none;
+    }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+    /* =========================
+           PASSWORD
+           ========================= */
+
+    .password-wrapper {
+        position: relative;
+    }
+
+        .password-wrapper .form-control {
+            padding-right: 70px;
+        }
+
+    .password-button {
+        position: absolute;
+        right: 6px;
+        top: 5px;
+        height: 34px;
+        padding: 0 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        background: #f8fafc;
+        color: #334155;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .password-button:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+    /* =========================
+           LOGIN BUTTON
+           ========================= */
+
+    .login-button {
+        width: 100%;
+        height: 44px;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 6px;
+        background: #2563eb;
+        border: 1px solid #1d4ed8;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+    }
+
+        .login-button:hover {
+            background: #1d4ed8;
+            color: #ffffff;
+        }
+
+    /* =========================
+           REGISTER
+           ========================= */
+
+    .register-section {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid #e2e8f0;
+        text-align: center;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+        .register-section a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .register-section a:hover {
+                text-decoration: underline;
+            }
+
+    /* =========================
+           SECURITY INFO
+           ========================= */
+
+    .security-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 20px;
+        padding: 14px;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+    }
+
+    .security-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+        font-size: 14px;
+    }
+
+    .security-text strong {
+        display: block;
+        margin-bottom: 2px;
+        color: #1e293b;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .security-text span {
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    /* =========================
+           FOOTER
+           ========================= */
+
+    .login-footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #64748b;
+        font-size: 11px;
+    }
+
+    /* =========================
+           RESPONSIVE (Razor Safe: @@media)
+           ========================= */
+
+    @@media screen and (max-width: 900px) {
+        .login-page {
+            padding: 20px 14px;
+        }
+
+        .login-left {
+            min-height: auto;
+            padding: 40px 30px;
+            border-right: none;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .login-right {
+            min-height: auto;
+            padding: 40px 30px;
+        }
+    }
+</style>
+
+<div class="login-page">
+    <div class="login-card">
+        <div class="row g-0">
+
+            <!-- LEFT BRANDING -->
+            <div class="col-lg-6 login-left">
+                <div class="login-brand-content">
+                    <div class="brand-logo">
+                        PMS
+                    </div>
+
+                    <h1>Product Management System</h1>
+
+                    <p class="login-description">
+                        Manage products, inventory, customers, suppliers, operations, and verified system analytics from a centralized enterprise platform.
+                    </p>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Inventory & Product Management
+                        </div>
+
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Customer & Supplier Directory
+                        </div>
+
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Secure Administrative Access
+                        </div>
+
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+                            Reports & Verified Insights
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT LOGIN -->
+            <div class="col-lg-6 login-right">
+                <div class="login-content">
+                    <div class="login-label">
+                        <i class="bi bi-shield-lock-fill"></i> Secure Login
+                    </div>
+
+                    <h2 class="login-title">Sign In</h2>
+
+                    <p class="login-subtitle">
+                        Sign in to access your Product Management System account and dashboard.
+                    </p>
+
+                    <!-- VALIDATION -->
+                    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+                    <!-- LOGIN FORM -->
+                    <form asp-action="Login" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <!-- EMAIL -->
+                        <div class="mb-4">
+                            <label class="form-label">Email Address</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-envelope input-icon"></i>
+                                <input type="email"
+                                       name="Email"
+                                       class="form-control"
+                                       placeholder="Enter your corporate email"
+                                       autocomplete="email"
+                                       required />
+                            </div>
+                        </div>
+
+                        <!-- PASSWORD -->
+                        <div class="mb-4">
+                            <label class="form-label">Password</label>
+                            <div class="password-wrapper">
+                                <i class="bi bi-lock input-icon"></i>
+                                <input type="password"
+                                       name="Password"
+                                       id="password"
+                                       class="form-control"
+                                       placeholder="Enter your password"
+                                       autocomplete="current-password"
+                                       required />
+                                <button type="button"
+                                        class="password-button"
+                                        onclick="togglePassword()">
+                                    <i id="passwordIcon" class="bi bi-eye"></i>
+                                    <span id="passwordText">Show</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- LOGIN BUTTON -->
+                        <button type="submit" class="login-button">
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In to Account
+                        </button>
+                    </form>
+
+                    <!-- REGISTER -->
+                    <div class="register-section">
+                        Don't have an authorized account?
+                        <a asp-controller="Account" asp-action="Register">Create an account</a>
+                    </div>
+
+                    <!-- SECURITY INFO -->
+                    <div class="security-info">
+                        <div class="security-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="security-text">
+                            <strong>Secure Account Access</strong>
+                            <span>Use your registered email address and password to continue.</span>
+                        </div>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="login-footer">
+                        Product Management System &bull; Enterprise Admin Portal
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const password = document.getElementById("password");
+        const passwordIcon = document.getElementById("passwordIcon");
+        const passwordText = document.getElementById("passwordText");
+
+        if (password.type === "password") {
+            password.type = "text";
+            passwordIcon.className = "bi bi-eye-slash";
+            passwordText.innerText = "Hide";
+        } else {
+            password.type = "password";
+            passwordIcon.className = "bi bi-eye";
+            passwordText.innerText = "Show";
+        }
+    }
+</script>
